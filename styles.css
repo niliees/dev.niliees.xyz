@@ -1,32 +1,53 @@
-/* Reset und Variablen */
+/* Präzise Farbdefinitionen und Grundeinstellungen */
 :root {
-    --bg-color: #0a0a0a;
-    --card-bg: rgba(17, 17, 17, 0.95);
-    --primary-gradient-start: #b19eff;
-    --primary-gradient-middle: #8C9EFF;
-    --primary-gradient-end: #64B5F6;
-    --text-color: #ffffff;
+    --bg-primary: #090909;
+    --bg-secondary: #111111;
+    --accent-purple: #b19eff;
+    --accent-blue: #64B5F6;
+    --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(255, 255, 255, 0.03);
+    --hover-overlay: rgba(140, 158, 255, 0.08);
     --nav-height: 64px;
 }
 
+/* Globale Resetregeln und Grundstile */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Optimiertes Rendering */
+html {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    background-color: var(--bg-color);
-    background-image: radial-gradient(
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Hintergrund-Effekte */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
         circle at top right,
-        rgba(41, 41, 41, 0.2),
+        rgba(41, 41, 41, 0.15),
         transparent 60%
     );
-    color: var(--text-color);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    line-height: 1.6;
-    min-height: 100vh;
+    pointer-events: none;
+    z-index: -1;
 }
 
 /* Navigation */
@@ -35,79 +56,91 @@ nav {
     top: 0;
     width: 100%;
     height: var(--nav-height);
-    background: rgba(10, 10, 10, 0.98);
-    backdrop-filter: blur(10px);
+    background: rgba(9, 9, 9, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--card-border);
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 nav ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 2.5rem;
+    list-style: none;
     padding: 0 5%;
 }
 
 nav a {
-    color: var(--text-color);
+    color: var(--text-primary);
     text-decoration: none;
     font-weight: 500;
     font-size: 0.95rem;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    transition: all 0.3s ease;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 nav a:hover {
-    background: rgba(140, 158, 255, 0.1);
-    color: var(--primary-gradient-middle);
+    background: var(--hover-overlay);
 }
 
 nav a.active {
-    background: linear-gradient(45deg, var(--primary-gradient-start), var(--primary-gradient-end));
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
     color: white;
 }
 
-/* Main Content */
+/* Hauptinhalt */
 main {
-    padding: calc(var(--nav-height) + 4rem) 5% 2rem;
+    padding: calc(var(--nav-height) + 4rem) 5% 6rem;
     max-width: 1400px;
     margin: 0 auto;
 }
 
+/* Titelbereich */
 h1 {
     font-size: 4.5rem;
     font-weight: 800;
     line-height: 1.1;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, 
-        var(--primary-gradient-start),
-        var(--primary-gradient-middle),
-        var(--primary-gradient-end));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
     text-align: center;
+    background: linear-gradient(
+        135deg,
+        var(--accent-purple) 0%,
+        #8C9EFF 50%,
+        var(--accent-blue) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 8s ease infinite;
 }
 
+/* Hero-Bereich */
 .hero {
     text-align: center;
     margin-bottom: 6rem;
-    padding: 3rem;
-    background: var(--card-bg);
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 4rem 3rem;
+    background: var(--bg-secondary);
+    border-radius: 24px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero:hover {
+    transform: translateY(-4px);
+    border-color: rgba(140, 158, 255, 0.1);
 }
 
 .hero h2 {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     margin-bottom: 1.5rem;
-    background: linear-gradient(45deg, 
-        var(--primary-gradient-middle),
-        var(--primary-gradient-end));
+    background: linear-gradient(135deg, #8C9EFF, var(--accent-blue));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -116,53 +149,80 @@ h1 {
     color: var(--text-secondary);
     max-width: 700px;
     margin: 0 auto;
+    line-height: 1.8;
 }
 
-/* Features Grid */
+/* Feature-Karten */
 .features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2.5rem;
     padding: 1rem;
 }
 
 .feature {
-    background: var(--card-bg);
+    background: var(--bg-secondary);
     padding: 2.5rem;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(140, 158, 255, 0.1),
+        transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
 }
 
 .feature:hover {
-    transform: translateY(-5px);
-    border-color: rgba(140, 158, 255, 0.2);
+    transform: translateY(-6px);
+    border-color: rgba(140, 158, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.feature:hover::before {
+    transform: translateX(100%);
 }
 
 .feature h3 {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
-    background: linear-gradient(45deg, 
-        var(--primary-gradient-middle),
-        var(--primary-gradient-end));
+    background: linear-gradient(135deg, #8C9EFF, var(--accent-blue));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .feature p {
     color: var(--text-secondary);
     font-size: 1.1rem;
+    line-height: 1.8;
 }
 
-/* Footer und Code Input */
+/* Footer und Code-Eingabe */
 .footer {
     position: fixed;
     bottom: 0;
     width: 100%;
     padding: 1.5rem;
-    background: rgba(10, 10, 10, 0.98);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(9, 9, 9, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--card-border);
+    z-index: 1000;
 }
 
 .code-input-container {
@@ -178,63 +238,125 @@ h1 {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     padding: 0.8rem 1.2rem;
-    color: var(--text-color);
-    width: 200px;
+    color: var(--text-primary);
+    width: 220px;
     font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.code-input:focus {
+    border-color: rgba(140, 158, 255, 0.3);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(140, 158, 255, 0.1);
 }
 
 .code-submit {
-    background: linear-gradient(45deg, 
-        var(--primary-gradient-middle),
-        var(--primary-gradient-end));
+    background: linear-gradient(135deg, #8C9EFF, var(--accent-blue));
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 0.8rem 1.5rem;
-    cursor: pointer;
+    padding: 0.8rem 1.8rem;
     font-weight: 500;
-    transition: opacity 0.3s ease;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.code-submit:hover {
-    opacity: 0.9;
+.code-submit::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0)
+    );
+    transform: translateX(-100%) skewX(-15deg);
+    transition: transform 0.6s ease;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    nav ul {
-        flex-direction: column;
-        padding: 1rem;
-        height: auto;
-    }
+.code-submit:hover::before {
+    transform: translateX(100%) skewX(-15deg);
+}
 
-    h1 {
-        font-size: 3rem;
+/* Animationen */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
     }
-
-    .hero {
-        padding: 2rem 1rem;
+    50% {
+        background-position: 100% 50%;
     }
-
-    .features {
-        grid-template-columns: 1fr;
+    100% {
+        background-position: 0% 50%;
     }
 }
 
-/* Custom Scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--bg-color);
+    background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-gradient-middle);
+    background: linear-gradient(var(--accent-purple), var(--accent-blue));
     border-radius: 4px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-gradient-end);
+/* Media Queries */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        padding: 1rem;
+        height: auto;
+        gap: 0.8rem;
+    }
+
+    .hero {
+        padding: 2rem 1.5rem;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature {
+        padding: 2rem;
+    }
+}
+
+/* Glasmorphismus-Effekt für Karten */
+@supports (backdrop-filter: blur(12px)) {
+    .feature, .hero {
+        background: rgba(17, 17, 17, 0.95);
+        backdrop-filter: blur(12px);
+    }
+}
+
+/* Verbessertes Loading-Verhalten */
+.feature, .hero {
+    opacity: 0;
+    animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
