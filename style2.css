@@ -296,3 +296,164 @@ img, video {
   --tw-text-opacity: 1;
   color: hsl(var(--primary) / var(--tw-text-opacity));
 }
+/* Behalte den vorherigen Reset-Code und Variablen bei */
+
+/* Spezifische Styles für die Navigation */
+nav {
+  background-color: hsl(var(--card));
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+nav a {
+  color: hsl(var(--foreground));
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
+}
+
+nav a:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+nav a.active {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+/* Main Content Styles */
+main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: hsl(var(--foreground));
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Hero Section */
+.hero {
+  background-color: hsl(var(--card));
+  padding: 3rem 2rem;
+  border-radius: var(--radius);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: hsl(var(--card-foreground));
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  color: hsl(var(--muted-foreground));
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Features Section */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.feature {
+  background-color: hsl(var(--card));
+  padding: 2rem;
+  border-radius: var(--radius);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+.feature h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: hsl(var(--card-foreground));
+  margin-bottom: 1rem;
+}
+
+.feature p {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Footer Styles */
+.footer {
+  background-color: hsl(var(--card));
+  padding: 1rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.code-input-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.code-input {
+  padding: 0.5rem 1rem;
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+.code-submit {
+  padding: 0.5rem 1rem;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.code-submit:hover {
+  background-color: hsl(var(--primary) / 0.9);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+  }
+
+  .hero {
+      padding: 2rem 1rem;
+  }
+
+  h1 {
+      font-size: 2rem;
+  }
+
+  .hero h2 {
+      font-size: 1.5rem;
+  }
+}
