@@ -5,214 +5,189 @@
     --text-primary: #ffffff;
     --text-secondary: rgba(255, 255, 255, 0.7);
     --accent-gradient: linear-gradient(45deg, #8b5cf6, #3b82f6);
-    --button-background: #ffffff;
-    --button-text: #000000;
-  }
-  
-  * {
+    --nav-background: rgba(10, 10, 10, 0.95);
+}
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  body {
+}
+
+body {
     background-color: var(--background-dark);
     color: var(--text-primary);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
-  }
-  
-  /* Header Navigation */
-  .header {
+    min-height: 100vh;
+}
+
+/* Navigation Styling */
+nav {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 1rem 2rem;
-    background-color: rgba(10, 10, 10, 0.95);
+    background-color: var(--nav-background);
     backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
     z-index: 1000;
-  }
-  
-  .nav-container {
+}
+
+nav ul {
     max-width: 1400px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    text-decoration: none;
-  }
-  
-  .nav-menu {
-    display: flex;
     gap: 2rem;
     list-style: none;
-  }
-  
-  .nav-link {
+}
+
+nav a {
     color: var(--text-primary);
     text-decoration: none;
     font-weight: 500;
-    transition: opacity 0.3s ease;
-  }
-  
-  .nav-link:hover {
-    opacity: 0.8;
-  }
-  
-  .download-button {
-    background: var(--button-background);
-    color: var(--button-text);
-    padding: 0.5rem 1.25rem;
+    padding: 0.5rem 1rem;
     border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.3s ease;
-  }
-  
-  .download-button:hover {
-    transform: translateY(-2px);
-  }
-  
-  /* Hero Section */
-  .hero {
-    padding: 8rem 2rem 4rem;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-  }
-  
-  .hero-content {
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+nav a.active {
+    background: var(--accent-gradient);
+    color: white;
+}
+
+/* Main Content */
+main {
+    padding-top: 5rem;
     max-width: 1400px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
-  }
-  
-  .hero-text {
-    max-width: 600px;
-  }
-  
-  .hero-subtitle {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .hero-title {
-    font-size: 4.5rem;
+    padding-inline: 2rem;
+}
+
+/* Hero Section */
+main h1 {
+    font-size: 3.5rem;
     font-weight: 800;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-bottom: 1.5rem;
-  }
-  
-  .hero-description {
-    font-size: 1.25rem;
-    color: var(--text-secondary);
     margin-bottom: 2rem;
-  }
-  
-  .hero-image {
-    width: 100%;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Features Grid */
-  .features {
-    padding: 4rem 2rem;
-  }
-  
-  .features-grid {
-    max-width: 1400px;
+    text-align: center;
+}
+
+.hero {
+    text-align: center;
+    padding: 4rem 0;
+}
+
+.hero h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    color: var(--text-secondary);
+    max-width: 600px;
     margin: 0 auto;
+    font-size: 1.25rem;
+}
+
+/* Features Section */
+.features {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
-  }
-  
-  .feature-card {
+    padding: 4rem 0;
+}
+
+.feature {
     background: var(--card-background);
     padding: 2rem;
     border-radius: 12px;
     transition: transform 0.3s ease;
-  }
-  
-  .feature-card:hover {
+}
+
+.feature:hover {
     transform: translateY(-5px);
-  }
-  
-  .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+}
+
+.feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
     background: var(--accent-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-  }
-  
-  .feature-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-  }
-  
-  .feature-description {
+}
+
+.feature p {
     color: var(--text-secondary);
-    line-height: 1.7;
-  }
-  
-  .search-engines {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+
+/* Footer */
+.footer {
+    background: var(--card-background);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.code-input-container {
+    display: flex;
     gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .search-engine-icon {
-    width: 24px;
-    height: 24px;
-    opacity: 0.7;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .hero-content {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-  
-    .hero-text {
-        margin: 0 auto;
-    }
-  
-    .features-grid {
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.code-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.code-submit {
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.code-submit:hover {
+    transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .features {
         grid-template-columns: repeat(2, 1fr);
     }
-  }
-  
-  @media (max-width: 768px) {
-    .nav-menu {
-        display: none;
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 1rem;
     }
-  
-    .hero-title {
-        font-size: 3rem;
+
+    main h1 {
+        font-size: 2.5rem;
     }
-  
-    .features-grid {
+
+    .features {
         grid-template-columns: 1fr;
     }
-  }
+}
