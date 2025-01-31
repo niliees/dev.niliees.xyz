@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced AI Chatbot</title>
+    <title>AI Chatbot</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +13,7 @@
             --bot-message-bg: #f0f0f0;
             --user-message-bg: #4a90e2;
             --user-message-color: white;
+            --transition-speed: 0.3s;
         }
 
         * {
@@ -28,6 +29,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: background var(--transition-speed);
         }
 
         .chat-container {
@@ -40,6 +42,7 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            transition: background-color var(--transition-speed);
         }
 
         .chat-header {
@@ -71,6 +74,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            font-size: 0.9em;
         }
 
         .status-dot {
@@ -78,6 +82,13 @@
             height: 8px;
             background: #4CAF50;
             border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .chat-messages {
@@ -88,6 +99,7 @@
             flex-direction: column;
             gap: 15px;
             background: #fafafa;
+            transition: background-color var(--transition-speed);
         }
 
         .message {
@@ -96,6 +108,7 @@
             border-radius: 15px;
             position: relative;
             animation: messageAppear 0.3s ease-out;
+            line-height: 1.4;
         }
 
         @keyframes messageAppear {
@@ -134,6 +147,29 @@
             padding: 20px;
             background: white;
             border-top: 1px solid #eee;
+            transition: background-color var(--transition-speed);
+        }
+
+        .suggestions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .suggestion {
+            background: #e3f2fd;
+            padding: 8px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9em;
+            border: none;
+            transition: background-color var(--transition-speed);
+            white-space: nowrap;
+        }
+
+        .suggestion:hover {
+            background: #bbdefb;
         }
 
         .chat-input-wrapper {
@@ -143,6 +179,7 @@
             border-radius: 30px;
             padding: 10px;
             align-items: center;
+            transition: background-color var(--transition-speed);
         }
 
         .chat-input {
@@ -152,6 +189,7 @@
             padding: 10px;
             outline: none;
             font-size: 1em;
+            transition: color var(--transition-speed);
         }
 
         .chat-controls {
@@ -165,7 +203,7 @@
             cursor: pointer;
             padding: 8px;
             border-radius: 50%;
-            transition: background-color 0.3s;
+            transition: all var(--transition-speed);
             color: #666;
         }
 
@@ -180,7 +218,10 @@
             padding: 10px 20px;
             border-radius: 20px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color var(--transition-speed);
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .send-button:hover {
@@ -194,6 +235,7 @@
             padding: 12px 16px;
             border-radius: 15px;
             border-bottom-left-radius: 5px;
+            margin: 5px 0;
         }
 
         .typing-indicator span {
@@ -214,24 +256,56 @@
         .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
         .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
 
-        .suggestions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 10px;
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
         }
 
-        .suggestion {
-            background: #e3f2fd;
-            padding: 8px 15px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background-color 0.3s;
+        .dark-mode .chat-container {
+            background: #2d3436;
         }
 
-        .suggestion:hover {
-            background: #bbdefb;
+        .dark-mode .chat-messages {
+            background: #1a1a1a;
+        }
+
+        .dark-mode .bot-message {
+            background: #3d4548;
+            color: #fff;
+        }
+
+        .dark-mode .chat-input-container {
+            background: #2d3436;
+            border-top-color: #3d4548;
+        }
+
+        .dark-mode .chat-input-wrapper {
+            background: #3d4548;
+        }
+
+        .dark-mode .chat-input {
+            color: #fff;
+        }
+
+        .dark-mode .suggestion {
+            background: #3d4548;
+            color: #fff;
+        }
+
+        .dark-mode .suggestion:hover {
+            background: #4a5356;
+        }
+
+        .dark-mode .control-button {
+            color: #fff;
+        }
+
+        .dark-mode .control-button:hover {
+            background: #4a5356;
+        }
+
+        .dark-mode .typing-indicator {
+            background: #3d4548;
         }
 
         /* Responsives Design */
@@ -245,6 +319,56 @@
             .message {
                 max-width: 85%;
             }
+
+            .suggestions {
+                overflow-x: auto;
+                padding-bottom: 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* Accessibility Improvements */
+        .control-button:focus,
+        .send-button:focus,
+        .suggestion:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary-color);
+            border-radius: 5px;
+        }
+
+        /* Scrollbar Styling */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #bbb;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: #999;
+        }
+
+        /* Loading Animation */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: inline-block;
+            animation: rotate 1s linear infinite;
+            margin-right: 5px;
         }
     </style>
 </head>
@@ -264,7 +388,7 @@
                 </div>
             </div>
             <div class="header-controls">
-                <button class="control-button" onclick="toggleTheme()">
+                <button class="control-button" onclick="toggleDarkMode()" title="Dark Mode umschalten">
                     <i class="fas fa-moon"></i>
                 </button>
             </div>
@@ -274,6 +398,7 @@
             <div class="message bot-message">
                 Hallo! Ich bin dein AI Assistent. Ich kann dir bei vielen Themen helfen und unterstütze auch Spracheingabe. 
                 Wie kann ich dir heute helfen?
+                <div class="message-time">14:00</div>
             </div>
         </div>
 
@@ -284,20 +409,18 @@
         </div>
 
         <div class="chat-input-container">
-            <div class="suggestions" id="suggestions">
-                <!-- Vorschläge werden dynamisch hinzugefügt -->
-            </div>
+            <div class="suggestions" id="suggestions"></div>
             <div class="chat-input-wrapper">
-                <button class="control-button" onclick="startVoiceInput()">
+                <button class="control-button" onclick="startVoiceInput()" title="Spracheingabe">
                     <i class="fas fa-microphone"></i>
                 </button>
                 <input type="text" class="chat-input" id="userInput" 
                        placeholder="Schreibe eine Nachricht..." autocomplete="off"/>
                 <div class="chat-controls">
-                    <button class="control-button" onclick="toggleTextToSpeech()">
+                    <button class="control-button" onclick="toggleTextToSpeech()" title="Vorlesen">
                         <i class="fas fa-volume-up"></i>
                     </button>
-                    <button class="send-button" onclick="sendMessage()">
+                    <button class="send-button" onclick="sendMessage()" title="Nachricht senden">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
@@ -306,137 +429,49 @@
     </div>
 
     <script>
-        // Konstanten und Variablen
-        const chatMessages = document.getElementById('chatMessages');
-        const userInput = document.getElementById('userInput');
-        const typingIndicator = document.getElementById('typingIndicator');
-        const suggestions = document.getElementById('suggestions');
-        let textToSpeechEnabled = false;
+        // Globale Variablen
         let darkMode = false;
+        let textToSpeechEnabled = false;
+        const synth = window.speechSynthesis;
+        let recognition = null;
 
-        // Vorschläge für häufige Fragen
-        const commonQuestions = [
-            'Was kannst du?',
-            'Erzähl mir einen Witz',
-            'Wie ist das Wetter?',
-            'Hilf mir bei einem Problem'
-        ];
+        // Spracherkennung initialisieren
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false;
+            recognition.lang = 'de-DE';
+        }
 
-        // Wissensbank für den Chatbot
+        // Wissensbasis des Chatbots
         const knowledgeBase = {
-            'hallo': ['Hallo! Wie geht es dir?', 'Hi! Schön dich zu sehen!', 'Guten Tag! Wie kann ich dir helfen?'],
-            'wie geht es dir': ['Mir geht es gut, danke! Wie kann ich dir helfen?', 'Bestens! Bereit dir zu helfen!'],
-            'wer bist du': ['Ich bin ein AI Chatbot, entwickelt um dir zu helfen!', 'Ich bin dein digitaler Assistent.'],
-            'was kannst du': ['Ich kann dir bei vielen Themen helfen, Gespräche führen, Witze erzählen und mehr!'],
-            'danke': ['Gerne!', 'Kein Problem!', 'Immer wieder gerne!'],
-            'tschüss': ['Auf Wiedersehen!', 'Bis bald!', 'Schönen Tag noch!'],
+            'hallo': [
+                'Hallo! Wie geht es dir?', 
+                'Hi! Schön dich zu sehen!', 
+                'Guten Tag! Wie kann ich dir helfen?'
+            ],
+            'wie geht es dir': [
+                'Mir geht es gut, danke! Wie kann ich dir helfen?', 
+                'Bestens! Bereit dir zu helfen!'
+            ],
+            'wer bist du': [
+                'Ich bin ein AI Chatbot, entwickelt um dir zu helfen!', 
+                'Ich bin dein digitaler Assistent.'
+            ],
+            'was kannst du': [
+                'Ich kann dir bei vielen Themen helfen, zum Beispiel:\n- Fragen beantworten\n- Gespräche führen\n- Witze erzählen\n- Spracherkennung nutzen\n- Text vorlesen',
+                'Ich bin ein vielseitiger Assistent! Ich kann mit dir chatten, Witze erzählen, Spracheingaben verstehen und Texte vorlesen.'
+            ],
+            'danke': [
+                'Gerne!', 
+                'Kein Problem!', 
+                'Immer wieder gerne!'
+            ],
+            'tschüss': [
+                'Auf Wiedersehen!', 
+                'Bis bald!', 
+                'Schönen Tag noch!'
+            ],
             'witz': [
                 'Warum können Skelette schlecht lügen? Weil sie so durchschaubar sind!',
                 'Was macht ein Clown im Büro? Faxen!',
-                'Treffen sich zwei Magnete. Sagt der eine: "Was soll ich heute anziehen?"'
-            ]
-        };
-
-        // Event Listener
-        document.addEventListener('DOMContentLoaded', () => {
-            showSuggestions();
-            userInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendMessage();
-            });
-            userInput.addEventListener('input', handleInput);
-        });
-
-        // Hauptfunktionen
-        function sendMessage() {
-            const message = userInput.value.trim();
-            if (message === '') return;
-
-            addMessage(message, 'user-message');
-            userInput.value = '';
-
-            // Typing-Indikator anzeigen
-            typingIndicator.style.display = 'block';
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-
-            // Verzögerung für realistischere Interaktion
-            setTimeout(() => {
-                typingIndicator.style.display = 'none';
-                const response = generateResponse(message);
-                addMessage(response, 'bot-message');
-                
-                if (textToSpeechEnabled) {
-                    speakText(response);
-                }
-            }, 1000 + Math.random() * 1500);
-        }
-
-        function addMessage(text, className) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${className}`;
-            messageDiv.innerHTML = `
-                ${text}
-                <div class="message-time">${getCurrentTime()}</div>
-            `;
-            chatMessages.appendChild(messageDiv);
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function generateResponse(message) {
-            message = message.toLowerCase();
-            
-            // Prüfe auf exakte Übereinstimmungen
-            for (let key in knowledgeBase) {
-                if (message.includes(key)) {
-                    const responses = knowledgeBase[key];
-                    return responses[Math.floor(Math.random() * responses.length)];
-                }
-            }
-
-            // Sentiment-Analyse für kontextbezogene Antworten
-            const sentiment = analyzeSentiment(message);
-            if (sentiment > 0) {
-                return "Das freut mich zu hören! Wie kann ich dir weiter helfen?";
-            } else if (sentiment < 0) {
-                return "Das tut mir leid zu hören. Kann ich dir irgendwie helfen?";
-            }
-
-            // Fallback-Antworten
-            const fallbackResponses = [
-                "Interessant! Erzähl mir mehr darüber.",
-                "Ich verstehe. Wie kann ich dir dabei helfen?",
-                "Das ist ein spannendes Thema! Lass uns mehr darüber reden.",
-                "Könntest du das anders formulieren?",
-                "Darüber würde ich gerne mehr erfahren."
-            ];
-
-            return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
-        }
-
-        // Hilfsfunktionen
-        function getCurrentTime() {
-            const now = new Date();
-            return now.toLocaleTimeString('de-DE', { 
-                hour: '2-digit', 
-                minute: '2-digit' 
-            });
-        }
-
-        function analyzeSentiment(message) {
-            const positiveWords = ['gut', 'toll', 'super', 'klasse', 'schön', 'froh', 'glücklich'];
-            const negativeWords = ['schlecht', 'traurig', 'ärgerlich', 'böse', 'schwierig', 'problematisch'];
-            
-            let sentiment = 0;
-            const words = message.toLowerCase().split(' ');
-            
-            words.forEach(word => {
-                if (positiveWords.includes(word)) sentiment++;
-                if (negativeWords.includes(word)) sentiment--;
-            });
-            
-            return sentiment;
-        }
-
-        function showSuggestions() {
-            suggestions.innerHTML = '';
-            commonQuestions.forEach(question => {
-                const suggestionDiv =
+                'Treffen sich zwei Magn
