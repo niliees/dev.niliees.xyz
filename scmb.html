@@ -37,9 +37,64 @@
 <body>
     <h1>Seyid Code</h1>
         <div class="section">
-            <h2>Code</h2>
+            <h2>Seyid Code</h2>
             <div class="code-block">
-                Code folgt...
+                let Sekunde = 0
+basic.forever(function () {
+    if (pins.digitalReadPin(DigitalPin.P1) == 1) {
+        pins.digitalWritePin(DigitalPin.P0, 1)
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.showString("AN")
+        Sekunde = 0
+        while (pins.digitalReadPin(DigitalPin.P1) == 1) {
+            Sekunde += 1
+            basic.pause(1000)
+            if (pins.digitalReadPin(DigitalPin.P1) == 0 || Sekunde == 15) {
+                pins.digitalWritePin(DigitalPin.P0, 1)
+                pins.digitalWritePin(DigitalPin.P2, 1)
+                basic.showString("AUS")
+                while (pins.digitalReadPin(DigitalPin.P0) == 1) {
+                    basic.pause(100)
+                }
+            }
+        }
+    }
+})
+ 
+            </div>
+            <h2>Nils Code</h2>
+            <div class="code-block">
+                input.onButtonPressed(Button.A, function () {
+    countdown = 1
+})
+input.onButtonPressed(Button.B, function () {
+    countdown = 0
+})
+let countdown = 0
+pins.digitalWritePin(DigitalPin.P0, 0)
+pins.digitalWritePin(DigitalPin.P2, 1)
+countdown = 0
+basic.forever(function () {
+    if (pins.analogReadPin(AnalogReadWritePin.P1) <= 1) {
+        pins.digitalWritePin(DigitalPin.P0, 1)
+        pins.digitalWritePin(DigitalPin.P2, 0)
+        basic.showString("AN")
+    } else {
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P2, 1)
+        basic.showString("AUS")
+    }
+})
+basic.forever(function () {
+    if (countdown == 1) {
+        if (pins.analogReadPin(AnalogReadWritePin.P1) <= 1) {
+            basic.pause(15000)
+            pins.digitalWritePin(DigitalPin.P0, 0)
+            pins.digitalWritePin(DigitalPin.P2, 1)
+        }
+    }
+})
+ 
             </div>
         </div>
     </div>
