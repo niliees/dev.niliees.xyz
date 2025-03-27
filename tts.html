@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech</title>
+</head>
+<body>
+    <h1>Text to Speech Beispiel</h1>
+    <textarea id="textToSpeak" rows="4" cols="50" placeholder="Geben Sie hier Ihren Text ein..."></textarea>
+    <br>
+    <button onclick="speakText()">Text vorlesen</button>
+
+    <script>
+        function speakText() {
+            const text = document.getElementById('textToSpeak').value;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE'; // Sprache auf Deutsch setzen
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>
